@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/border"
+    android:padding="10sp">
+    <Button
+        android:id="@+id/btn_rank"
+        android:layout_width="60sp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="10sp"
+        android:layout_alignParentLeft="true"
+        tools:text="1"
+        android:textSize="20sp"
+        android:layout_marginRight="10sp"
+        android:clickable="false"
+        android:layout_alignParentStart="true" />
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/btn_rank"
+        android:layout_toRightOf="@+id/btn_rank"
+        android:contentDescription="@string/crypto_icon"
+        android:src="@drawable/icon_placeholder" />
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="30sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:maxWidth="175sp"
+        android:textSize="20sp"
+        tools:text="Bitcoin (BTC)"
+        android:layout_alignTop="@+id/iv_icon"
+        android:layout_toRightOf="@+id/iv_icon"
+        android:layout_toEndOf="@+id/iv_icon" />
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textSize="18sp"
+        android:layout_toRightOf="@+id/btn_rank"
+        android:layout_below="@+id/tv_title"
+        tools:text="$ 8500.00"
+        android:layout_marginRight="5sp"
+        android:layout_toEndOf="@+id/btn_rank"
+        android:layout_marginEnd="5sp" />
+    <TextView
+        android:id="@+id/tv_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textSize="18sp"
+        android:layout_below="@+id/tv_title"
+        android:layout_toRightOf="@+id/tv_price"
+        android:layout_toEndOf="@+id/tv_price"
+        tools:text="(5.02%)"/>
+    <TextView
+        android:id="@+id/tv_sentiment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textSize="30sp"
+        android:layout_alignParentRight="true"
+        tools:text="100"
+        android:layout_centerVertical="true"
+        android:textColor="@color/colorGreen"
+        android:layout_alignParentEnd="true"
+        android:textStyle="bold"/>
+
+</RelativeLayout>
