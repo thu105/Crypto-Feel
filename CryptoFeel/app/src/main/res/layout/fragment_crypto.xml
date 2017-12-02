@@ -84,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_cell_price"
-            android:visibility="gone"/>
+            android:visibility="invisible"/>
         <Button
             android:id="@+id/btn_cell_updated_time"
             android:layout_width="match_parent"
