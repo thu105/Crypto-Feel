@@ -35,9 +35,9 @@ import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class UpdateItem extends AsyncTask<String,String,Void> {
-    Button ut;
-    RecyclerView.Adapter adapter;
-    ProgressBar pb;
+    private Button ut;
+    private RecyclerView.Adapter adapter;
+    private ProgressBar pb;
 
     public UpdateItem(RecyclerView.Adapter adapter,Button ut,  ProgressBar pb){
         this.ut=ut;
@@ -66,7 +66,7 @@ public class UpdateItem extends AsyncTask<String,String,Void> {
             reader = new BufferedReader(new InputStreamReader(stream));
 
             builder = new StringBuilder();
-            String line = "";
+            String line;
 
             while ((line = reader.readLine()) != null) {
                 builder.append(line);

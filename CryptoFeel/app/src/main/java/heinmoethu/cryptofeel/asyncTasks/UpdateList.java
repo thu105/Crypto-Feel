@@ -33,9 +33,9 @@ import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class UpdateList extends AsyncTask<String,Integer,Void> {
-    RecyclerView.Adapter adapter;
-    SwipeRefreshLayout srl;
-    ProgressBar pb;
+    private RecyclerView.Adapter adapter;
+    private SwipeRefreshLayout srl;
+    private ProgressBar pb;
 
     public UpdateList(RecyclerView.Adapter adapter,SwipeRefreshLayout srl, ProgressBar pb){
         this.adapter=adapter;
