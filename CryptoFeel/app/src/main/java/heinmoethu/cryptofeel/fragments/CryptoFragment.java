@@ -89,15 +89,7 @@ public class CryptoFragment extends Fragment {
         btn_cell_updated_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    new UpdateItem().execute("https://api.coinmarketcap.com/v1/ticker/", crypto.getId()).get();
-                    //new UpdateItem(adapter,btn_cell_updated_time,pb_cell_loading).execute("https://api.coinmarketcap.com/v1/ticker/", crypto.getId()).get();
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-                updateViews();
-                adapter.notifyDataSetChanged();
-
+                new UpdateCrypto().execute("https://api.coinmarketcap.com/v1/ticker/", crypto.getId());
             }
         });
 
@@ -129,5 +121,108 @@ public class CryptoFragment extends Fragment {
         } else {
             tv_cell_sentiment.setTextColor(Color.parseColor("#00DD00"));
         }
+    }
+
+    public class UpdateCrypto extends AsyncTask<String,String,Void> {//Used to update one crypto item
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        btn_cell_updated_time.setVisibility(View.INVISIBLE);
+        pb_cell_loading.setVisibility(View.VISIBLE);
+    }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            HttpsURLConnection connection = null;
+            BufferedReader reader = null;
+            StringBuilder builder = null;
+            try {
+                URL url = new URL(params[0] + params[1]);
+                connection = (HttpsURLConnection) url.openConnection();
+                connection.connect();
+
+                InputStream stream = connection.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(stream));
+
+                builder = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null)
+                    connection.disconnect();
+                try {
+                    if (reader != null)
+                        reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (builder != null) {
+                try {
+                    CryptoModel crypto = CryptoCollection.GetInstance().getCrypto(params[1]);
+                    JSONArray list = new JSONArray(builder.toString());
+                    ConfigurationBuilder cb = new ConfigurationBuilder().setDebugEnabled(true).setOAuthConsumerKey("b3f5iOVkPMXKERjbixFtHgQZu")
+                            .setOAuthConsumerSecret("rJFx6rk3izots2w3tJ5meOVcBjafDX5DKzXlx0zegarrdp20av")
+                            .setOAuthAccessToken("774286002663796736-Ag8jzsIfCb300vILqcwdJqqufu1HWIf")
+                            .setOAuthAccessTokenSecret("NVwS4IivV40ckELlnJ08Ikw5YzsPvHmteKoedU7ch9DHv");
+                    Twitter twitter = new TwitterFactory(cb.build()).getInstance();
+                    JSONObject item = list.getJSONObject(0);
+                    crypto.setPrice(+item.getDouble("price_usd"));
+                    crypto.setImg(item.getString("symbol").toLowerCase());
+                    crypto.setRank(item.getInt("rank"));
+                    crypto.setChange(item.getDouble("percent_change_1h"));
+                    crypto.setDate(DateTime.now());
+
+                    Query query = new Query(item.getString("name") + " -filter:retweets -filter:links -filter:replies -filter:images");
+                    query.setLang("en");
+                    query.setCount(100);
+                    ArrayList<String> tweetList = crypto.getTweets();
+                    tweetList.clear();
+                    try {
+                        QueryResult result = twitter.search(query);
+                        List<twitter4j.Status> tweets = result.getTweets();
+                        double sentiment = 0;
+                        HashMap<String, Boolean> dict = CryptoCollection.GetInstance().getDict();
+                        for (int y = 0; y < tweets.size(); ++y) {
+                            String sentence = tweets.get(y).getText();
+                            if (y < 50)
+                                tweetList.add(sentence);
+                            String[] words = sentence.trim().split("\\s+");
+                            for (String word : words) {
+                                Boolean b = dict.get(word);
+                                if (b != null) {
+                                    if (b == Boolean.TRUE)
+                                        sentiment++;
+                                    else
+                                        sentiment--;
+                                }
+                            }
+                        }
+                        crypto.setSentiment(sentiment / tweets.size());
+                    } catch (TwitterException e) {
+                        e.printStackTrace();
+                        tweetList.add("Rate Limit Reached");
+                        crypto.setSentiment(0);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        btn_cell_updated_time.setVisibility(View.VISIBLE);
+        pb_cell_loading.setVisibility(View.INVISIBLE);
+        adapter.notifyDataSetChanged();
+        updateViews();
+    }
     }
 }
