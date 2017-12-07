@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.lang.reflect.Field;
+import java.util.Locale;
 
 import heinmoethu.cryptofeel.R;
 import heinmoethu.cryptofeel.CryptoCollection;
@@ -24,7 +25,6 @@ public class CryptoListAdapter extends RecyclerView.Adapter<CryptoListAdapter.Cr
     public CryptoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View v = inflater.inflate(R.layout.cell_crypto,parent,false);
-
         return new CryptoViewHolder(v);
     }
 
@@ -57,21 +57,21 @@ public class CryptoListAdapter extends RecyclerView.Adapter<CryptoListAdapter.Cr
         void setup(CryptoModel crypto){
             this.crypto=crypto;
             this.tv_title.setText(crypto.getTitle());
-            this.tv_price.setText("$ "+Double.toString(crypto.getPrice()));
-            this.tv_change.setText("("+Double.toString(crypto.getChange())+"%)");
+            this.tv_price.setText("$ "+ Double.toString(crypto.getPrice()));
+            this.tv_change.setText(String.format(Locale.US,"(%.2f %%)",crypto.getChange()));
             if(crypto.getChange()<0){
                 tv_change.setTextColor(Color.parseColor("#DD0000"));
             }
             else{
                 tv_change.setTextColor(Color.parseColor("#00DD00"));
             }
-            this.tv_sentiment.setText(String.format("%.2f",crypto.getSentiment()));
+            this.tv_sentiment.setText(String.format(Locale.US,"%.2f",crypto.getSentiment()));
             if (crypto.getSentiment() < 0) {
                 tv_sentiment.setTextColor(Color.parseColor("#DD0000"));
             } else {
                 tv_sentiment.setTextColor(Color.parseColor("#00DD00"));
             }
-            this.btn_rank.setText(Integer.toString(crypto.getRank()));
+            this.btn_rank.setText(String.format(Locale.US,"%d",crypto.getRank()));
             try {
                 Field id = R.drawable.class.getDeclaredField(crypto.getImg());
                 iv_icon.setImageResource(id.getInt(id));
@@ -85,7 +85,6 @@ public class CryptoListAdapter extends RecyclerView.Adapter<CryptoListAdapter.Cr
 
         @Override
         public void onClick(View view) {
-
             Intent cryptoIntent =new Intent(view.getContext(), CryptoActivity.class);
             cryptoIntent.putExtra(CryptoActivity.EXTRA_CRYPTO_ID,this.crypto.getId());
             view.getContext().startActivity(cryptoIntent);

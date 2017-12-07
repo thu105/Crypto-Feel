@@ -5,4 +5,5 @@
     <string name="artist">Artist</string>
     <string name="title">Title</string>
     <string name="crypto_icon">Cryptocurrency Icon</string>
+    <string name="dollar">$</string>
 </resources>

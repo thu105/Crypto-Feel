@@ -18,19 +18,17 @@
             android:layout_alignParentTop="true"
             android:contentDescription="@string/crypto_icon"
             android:src="@drawable/icon_placeholder"
-            android:layout_marginRight="10sp"
             android:layout_marginEnd="10sp" />
         <TextView
             android:id="@+id/tv_cell_title"
             android:layout_width="wrap_content"
             android:layout_height="50sp"
             android:ellipsize="end"
-            android:maxWidth="200sp"
+            android:maxWidth="190sp"
             android:textSize="20sp"
             android:gravity="center_vertical"
             tools:text="Bitcoin (BTC)"
             android:layout_alignTop="@+id/iv_cell_icon"
-            android:layout_toRightOf="@+id/iv_cell_icon"
             android:layout_toEndOf="@+id/iv_cell_icon" />
 
         <TextView
@@ -41,7 +39,6 @@
             android:textSize="20sp"
             tools:text="100"
             android:layout_below="@+id/iv_cell_icon"
-            android:layout_marginRight="10sp"
             android:gravity="center"
             android:layout_marginEnd="10sp" />
 
@@ -51,10 +48,8 @@
             android:layout_height="30sp"
             android:maxLines="1"
             android:textSize="20sp"
-            android:layout_toRightOf="@+id/tv_cell_rank"
             android:layout_below="@+id/tv_cell_title"
             tools:text="$ 8500.00"
-            android:layout_marginRight="5sp"
             android:layout_toEndOf="@+id/tv_cell_rank"
             android:layout_marginEnd="5sp" />
         <TextView
@@ -64,7 +59,6 @@
             android:maxLines="1"
             android:textSize="20sp"
             android:layout_below="@+id/tv_cell_title"
-            android:layout_toRightOf="@+id/tv_cell_price"
             android:layout_toEndOf="@+id/tv_cell_price"
             tools:text="(5.02%)"/>
         <TextView
@@ -77,7 +71,6 @@
             android:gravity="center"
             android:textColor="@color/colorGreen"
             android:textStyle="bold"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
         <ProgressBar
             android:id="@+id/pb_cell_loading"
@@ -98,7 +91,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_tweets"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="100">
 
     </android.support.v7.widget.RecyclerView>
