@@ -88,7 +88,6 @@ public class CryptoListFragment extends Fragment {
                 e.printStackTrace();
             }
             new UpdateList(adapter,srl).execute("https://api.coinmarketcap.com/v1/ticker/?limit=25");
-            //CryptoCollection.GetInstance().createList();
         }
 
         return v;
@@ -96,9 +95,6 @@ public class CryptoListFragment extends Fragment {
 
     private void refreshData() {
         new UpdateList(adapter,srl).execute("https://api.coinmarketcap.com/v1/ticker/?limit=25");
-//        CryptoCollection.GetInstance().createList();
-//        this.adapter.notifyDataSetChanged();
-//        srl.setRefreshing(false);
     }
 
     @Override

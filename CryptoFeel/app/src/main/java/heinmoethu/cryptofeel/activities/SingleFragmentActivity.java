@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import heinmoethu.cryptofeel.R;
 
-public abstract class SingleFragmentActivity extends AppCompatActivity {
+public abstract class SingleFragmentActivity extends AppCompatActivity {//Abstract class for all activities
 
     protected abstract Fragment getFragment();
     @Override

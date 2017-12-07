@@ -11,12 +11,11 @@ import heinmoethu.cryptofeel.CryptoCollection;
 import heinmoethu.cryptofeel.models.CryptoModel;
 import twitter4j.Query;
 import twitter4j.QueryResult;
-import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
 
-public class AnalyseTweets extends AsyncTask<String,String,String> {
+public class AnalyseTweets extends AsyncTask<String,String,String> {//Performing sentiment analysis and updating the tweetList
     private Twitter twitter;
     private CryptoModel crypto;
     private CountDownLatch cdl;

@@ -4,11 +4,6 @@ package heinmoethu.cryptofeel.asyncTasks;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
-
-import org.joda.time.DateTime;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -39,6 +34,5 @@ public class Waiter extends AsyncTask<Void,Void,Void>{
         super.onPostExecute(aVoid);
         srl.setRefreshing(false);
         adapter.notifyDataSetChanged();
-        Log.e("TIME", DateTime.now().toString());
     }
 }
