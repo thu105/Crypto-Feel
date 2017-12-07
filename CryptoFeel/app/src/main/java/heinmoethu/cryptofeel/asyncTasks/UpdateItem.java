@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 
 import heinmoethu.cryptofeel.CryptoCollection;
+import heinmoethu.cryptofeel.fragments.CryptoFragment;
 import heinmoethu.cryptofeel.models.CryptoModel;
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -33,22 +35,22 @@ import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class UpdateItem extends AsyncTask<String,String,Void> {//Used to update one crypto item
-    private Button ut;
-    private RecyclerView.Adapter adapter;
-    private ProgressBar pb;
+//    private Button ut;
+//    private RecyclerView.Adapter adapter;
+//    private ProgressBar pb;
+//
+//    public UpdateItem(RecyclerView.Adapter adapter,Button ut,  ProgressBar pb){
+//        this.ut=ut;
+//        this.adapter=adapter;
+//        this.pb=pb;
+//    }
 
-    public UpdateItem(RecyclerView.Adapter adapter,Button ut,  ProgressBar pb){
-        this.ut=ut;
-        this.adapter=adapter;
-        this.pb=pb;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        ut.setVisibility(View.INVISIBLE);
-        pb.setVisibility(View.VISIBLE);
-    }
+//    @Override
+//    protected void onPreExecute() {
+//        super.onPreExecute();
+//        ut.setVisibility(View.INVISIBLE);
+//        pb.setVisibility(View.VISIBLE);
+//    }
 
     @Override
     protected Void doInBackground(String... params) {
@@ -135,11 +137,12 @@ public class UpdateItem extends AsyncTask<String,String,Void> {//Used to update 
         return null;
     }
 
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        ut.setVisibility(View.VISIBLE);
-        pb.setVisibility(View.INVISIBLE);
-        adapter.notifyDataSetChanged();
-    }
+//    @Override
+//    protected void onPostExecute(Void aVoid) {
+//        super.onPostExecute(aVoid);
+//        ut.setVisibility(View.VISIBLE);
+//        pb.setVisibility(View.INVISIBLE);
+//        adapter.notifyDataSetChanged();
+//
+//    }
 }

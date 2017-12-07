@@ -32,7 +32,6 @@ public class AnalyseTweets extends AsyncTask<String,String,String> {//Performing
         Query query = new Query(name + " -filter:retweets -filter:links -filter:replies -filter:images");
         query.setCount(100);
         query.setLang("en");
-        ArrayList<String> tweetList = new ArrayList<>();
         try {
             QueryResult result=twitter.search(query);
             List<twitter4j.Status> tweets = result.getTweets();
@@ -41,7 +40,7 @@ public class AnalyseTweets extends AsyncTask<String,String,String> {//Performing
             for (int y = 0; y < tweets.size(); ++y) {
                 String sentence=tweets.get(y).getText();
                 if (y<50 )
-                    tweetList.add(sentence);
+                    crypto.addTweet(sentence);
                 String[] words = sentence.trim().split("\\s+");
                 for (String word:words) {
                     Boolean b = dict.get(word);
@@ -56,10 +55,9 @@ public class AnalyseTweets extends AsyncTask<String,String,String> {//Performing
             crypto.setSentiment(sentiment/tweets.size());
         } catch (TwitterException e) {
             e.printStackTrace();
-            tweetList.add("Rate Limit Reached");
+            crypto.addTweet("Rate Limit Reached");
             crypto.setSentiment(0);
         }
-        crypto.setTweets(tweetList);
         cdl.countDown();
         return null;
     }

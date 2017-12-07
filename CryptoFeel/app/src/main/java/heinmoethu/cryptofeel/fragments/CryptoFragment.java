@@ -41,6 +41,7 @@ import heinmoethu.cryptofeel.CryptoCollection;
 import heinmoethu.cryptofeel.activities.CryptoActivity;
 import heinmoethu.cryptofeel.adapters.TweetListAdapter;
 import heinmoethu.cryptofeel.asyncTasks.UpdateItem;
+import heinmoethu.cryptofeel.asyncTasks.UpdateList;
 import heinmoethu.cryptofeel.models.CryptoModel;
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -88,14 +89,21 @@ public class CryptoFragment extends Fragment {
         btn_cell_updated_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new UpdateItem(adapter,btn_cell_updated_time,pb_cell_loading).execute("https://api.coinmarketcap.com/v1/ticker/", crypto.getId());
+                try {
+                    new UpdateItem().execute("https://api.coinmarketcap.com/v1/ticker/", crypto.getId()).get();
+                    //new UpdateItem(adapter,btn_cell_updated_time,pb_cell_loading).execute("https://api.coinmarketcap.com/v1/ticker/", crypto.getId()).get();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+                updateViews();
+                adapter.notifyDataSetChanged();
+
             }
         });
 
         return v;
     }
-
-    private void updateViews() {
+    public void updateViews() {
         tv_cell_title.setText(this.crypto.getTitle());
         tv_cell_change.setText("(" + Double.toString(this.crypto.getChange()) + "%)");
         if (crypto.getChange() < 0) {
